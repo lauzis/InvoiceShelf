@@ -87,7 +87,10 @@ class Expense extends Model implements HasMedia
         $media = $this->getFirstMedia('receipts');
 
         if ($media) {
-            return url('/api/v1/expenses/'.$this->id.'/show/receipt');
+            return [
+                'url' => url('/api/v1/expenses/'.$this->id.'/show/receipt'),
+                'type' => $media->type,
+            ];
         }
 
         return null;
