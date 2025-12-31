@@ -8,6 +8,8 @@ services:
         - UID=${USRID:-1000}
         - GID=${GRPID:-1000}
       target: development
+    ports:
+      - "9000:9000"
     volumes:
       - ../../:/var/www/html
     networks:
@@ -21,7 +23,7 @@ services:
     environment:
       - "PHP_FPM_HOST=php-fpm:9000"
     ports:
-      - '80:80'
+      - '8001:80'
     volumes:
       - ../../:/var/www/html
     networks:
@@ -38,7 +40,7 @@ services:
       MYSQL_USER: invoiceshelf
       MYSQL_PASSWORD: invoiceshelf
     ports:
-      - "3306:3306"
+      - "3307:3306"
     volumes:
       - invoiceshelf-dev-mysql:/var/lib/mysql
     networks:
