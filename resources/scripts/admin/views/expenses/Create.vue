@@ -306,13 +306,13 @@
             <div class="p-4 border border-gray-200 border-solid rounded bg-gray-50">
               <img
                 v-if="attachmentType === 'image'"
-                :src="expenseStore.currentExpense.attachment_receipt_url"
+                :src="expenseStore.currentExpense.attachment_receipt_url.url || expenseStore.currentExpense.attachment_receipt_url"
                 class="max-w-full h-auto mx-auto"
                 alt="Receipt"
               />
               <iframe
                 v-else-if="attachmentType === 'pdf'"
-                :src="expenseStore.currentExpense.attachment_receipt_url"
+                :src="expenseStore.currentExpense.attachment_receipt_url.url || expenseStore.currentExpense.attachment_receipt_url"
                 class="w-full h-[600px]"
                 frameborder="0"
               >
@@ -450,6 +450,11 @@ const attachmentType = computed(() => {
   }
 
   const url = expenseStore.currentExpense.attachment_receipt_url
+
+  if (url && typeof url === 'object' && url.url) {
+    return url.type === 'pdf' ? 'pdf' : 'image'
+  }
+
   if (!url || typeof url !== 'string') return null
 
   // Extract extension from URL (ignoring query params)
